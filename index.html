@@ -3,255 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>seacoral | 数字礁群的构建者</title>
+    <title>我的个人主页 | Creative Space</title>
+    <!-- 引入 Tailwind CSS 进行快速样式设计 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: "rgba(255, 255, 255, 0.7)", // 浅色玻璃
+                        glassHover: "rgba(255, 255, 255, 0.9)",
+                        darkText: "#1e293b", // Slate 800
+                        lightText: "#64748b", // Slate 500
+                        accent: "#8b5cf6", // Violet
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* 导入图标字体：用于GitHub/邮件等小图标 */
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-
-        /* CSS 变量定义 - 方便未来更换主题 */
-        :root {
-            --main-bg: #1f1c2c;
-            --secondary-bg: #928dab;
-            --card-bg: rgba(0, 0, 0, 0.4);
-            --text-color: #fff;
-            --accent-color: #00ffff; /* 亮青色，模仿海洋光芒 */
-            --hover-color: #00cccc;
-        }
-
-        /* 基本重置 */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-            min-height: 100vh; /* 保证至少占满整个视口 */
-            display: flex;
-            flex-direction: column; /* 允许内容垂直排列 */
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, var(--main-bg), var(--secondary-bg));
-            color: var(--text-color);
+            background-color: #f8fafc; /* 浅色背景 Slate 50 */
+            color: #1e293b; /* 深色文字 */
             overflow-x: hidden;
-            padding: 40px 20px;
         }
-        
-        /* 动态背景球体 - 继承原有样式 */
-        .background {
-            position: fixed; /* 固定在背景 */
-            width: 100%;
-            height: 100%;
-            top: 0; left: 0;
-            overflow: hidden;
-            z-index: -1;
-        }
-        .background span {
-            position: absolute;
-            display: block;
-            background: rgba(255, 255, 255, 0.1);
+
+        /* 动态背景球体 - 颜色调淡以适应浅色主题 */
+        .bg-orb {
+            position: fixed;
             border-radius: 50%;
-            animation: float 10s linear infinite;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
         }
-        @keyframes float {
-            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #ddd6fe; animation: float 8s infinite alternate; } /* Violet 200 */
+        .orb-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: #ccfbf1; animation: float 10s infinite alternate-reverse; } /* Teal 100 */
+        .orb-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #fbcfe8; opacity: 0.3; animation: float 12s infinite alternate; } /* Pink 200 */
+
+        /* 浅色磨砂玻璃效果 */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
-        /* 页面主要容器 */
-        .container {
-            width: 100%;
-            max-width: 900px;
-            z-index: 10;
-        }
+        /* 滚动条美化 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* 头部介绍卡片 */
-        .header-card {
-            text-align: center;
-            background: var(--card-bg);
-            padding: 50px 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #8b5cf6;
         }
-        .header-card h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: var(--accent-color);
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-        }
-        .header-card p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        
-        /* 社交链接样式 */
-        .social-links a {
-            color: var(--text-color);
-            font-size: 1.5rem;
-            margin: 0 15px;
-            transition: color 0.3s, transform 0.3s;
-        }
-        .social-links a:hover {
-            color: var(--accent-color);
-            transform: scale(1.1);
-        }
-
-        /* 项目展示区 */
-        .projects-section {
-            padding: 20px 0;
-        }
-        .projects-section h2 {
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-        }
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        /* 单个项目卡片 */
-        .project-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, border-color 0.3s;
-            border-left: 5px solid var(--accent-color);
-        }
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-left: 5px solid var(--hover-color);
-        }
-        .project-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--accent-color);
-        }
-        .project-card p {
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-            opacity: 0.85;
-        }
-        .project-card a {
-            display: inline-block;
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 8px 15px;
-            border: 1px solid var(--text-color);
-            border-radius: 8px;
-            transition: background 0.3s, color 0.3s;
-            font-size: 0.9rem;
-        }
-        .project-card a:hover {
-            background: var(--accent-color);
-            color: var(--main-bg);
-            border-color: var(--accent-color);
-        }
-        
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .header-card h1 { font-size: 2.5rem; }
-            .header-card p { font-size: 1rem; }
-            .project-card { border-left-width: 3px; }
-            .projects-section h2 { font-size: 1.8rem; }
-        }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body>
-    
-    <div class="background">
-        <script>
-            // 脚本用于动态生成背景气泡
-            const bg = document.querySelector('.background');
-            for (let i = 0; i < 30; i++) {
-                const span = document.createElement('span');
-                // 随机设置气泡的位置、大小、动画速度和延迟
-                span.style.left = Math.random() * 100 + 'vw';
-                span.style.width = span.style.height = Math.random() * 15 + 10 + 'px';
-                span.style.animationDuration = (8 + Math.random() * 12) + 's';
-                span.style.animationDelay = Math.random() * 10 + 's';
-                bg.appendChild(span);
-            }
-        </script>
+<body class="font-sans antialiased relative min-h-screen flex flex-col text-slate-800">
+
+    <!-- 动态背景元素 -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 font-bold text-2xl tracking-wider text-slate-800">
+                    <i class="fa-solid fa-rocket mr-2 text-purple-600"></i>MY<span class="text-purple-600">SPACE</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-slate-600 hover:text-purple-600 transition-colors px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                        <a href="#photos" class="text-slate-600 hover:text-purple-600 transition-colors px-3 py-2 rounded-md text-sm font-medium">相册</a>
+                        <a href="#contact" class="text-slate-600 hover:text-purple-600 transition-colors px-3 py-2 rounded-md text-sm font-medium">联系我</a>
+                        <a href="#guestbook" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-all shadow-lg hover:shadow-purple-500/30">留言板</a>
+                    </div>
+                </div>
+                <!-- 移动端菜单按钮 (简化版) -->
+                <div class="md:hidden">
+                    <button class="text-slate-500 hover:text-slate-800">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页 Hero 区域 (修改：头像左置布局) -->
+    <section id="home" class="flex-grow flex items-center justify-center pt-32 pb-12 px-4 sm:px-6 lg:px-8 min-h-screen">
+        <!-- 容器改为 flex-row 以实现左右布局，items-start 实现顶部对齐 -->
+        <div class="max-w-6xl w-full flex flex-col md:flex-row items-center md:items-start gap-12">
+            
+            <!-- 头像区域 (左侧) -->
+            <div class="flex-shrink-0 relative group">
+                <div class="absolute -inset-2 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full blur opacity-60 group-hover:opacity-100 transition duration-500"></div>
+                <img class="relative w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-white object-cover shadow-2xl transform transition duration-500 group-hover:scale-105" 
+                     src="me.jpg" 
+                     alt="Avatar">
+                <div class="absolute bottom-4 right-4 w-8 h-8 bg-green-500 border-4 border-white rounded-full flex items-center justify-center shadow-md" title="Online">
+                    <i class="fa-solid fa-check text-white text-xs"></i>
+                </div>
+            </div>
+            
+            <!-- 文本区域 (右侧) -->
+            <div class="flex-1 text-center md:text-left pt-4">
+                <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-purple-600 uppercase bg-purple-100 rounded-full">
+                    Welcome to my world
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-800 mb-4 tracking-tight">
+                     I am<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600" id="name-placeholder">Seacoral</span>
+                </h1>
+                <p class="mt-2 text-2xl text-slate-600 h-10 typing-cursor font-light">
+                    <span id="typing-text"></span>
+                </p>
+                <p class="mt-6 text-lg text-slate-500 leading-relaxed max-w-2xl">
+                    欢迎来到我的世界。
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 mt-8 justify-center md:justify-start">
+                    <a href="#contact" class="bg-slate-800 text-white px-8 py-3 rounded-full hover:bg-slate-700 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
+                        <i class="fa-regular fa-paper-plane"></i> 联系我
+                    </a>
+                    <a href="#photos" class="glass-panel text-slate-700 px-8 py-3 rounded-full border border-slate-200 hover:bg-white transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-camera text-purple-500"></i> 看照片
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 照片墙区域 -->
+    <section id="photos" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 flex items-center justify-center gap-3 text-slate-800">
+                <i class="fa-solid fa-images text-purple-600"></i> 我的摄影与生活
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 照片卡片样式更新 -->
+                <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 shadow-md hover:shadow-xl transition-all">
+                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Photo 1">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white">远行</h3>
+                        <p class="text-sm text-gray-200">探索世界的尽头</p>
+                    </div>
+                </div>
+                <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 shadow-md hover:shadow-xl transition-all">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Photo 2">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white">科技</h3>
+                        <p class="text-sm text-gray-200">未来的无限可能</p>
+                    </div>
+                </div>
+                <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 shadow-md hover:shadow-xl transition-all">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Photo 3">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white">代码</h3>
+                        <p class="text-sm text-gray-200">构建数字世界</p>
+                    </div>
+                </div>
+                 <!-- 更多照片占位 -->
+                 <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 flex items-center justify-center bg-white/40 border-dashed border-2 border-slate-300 hover:border-purple-400 transition-colors">
+                    <div class="text-center group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-plus text-4xl text-slate-400 mb-2"></i>
+                        <p class="text-slate-500">更多照片加载中...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系与社交功能区 -->
+    <section id="contact" class="py-20 relative">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-slate-800">保持联系</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 微信 -->
+                <div onclick="toggleWechatModal()" class="glass-panel p-8 rounded-2xl text-center hover:bg-green-50/80 transition-all cursor-pointer group border-t-4 border-green-500 shadow-sm hover:shadow-lg hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-500 transition-colors">
+                        <i class="fa-brands fa-weixin text-2xl text-green-600 group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-800">加我微信</h3>
+                    <p class="text-sm text-slate-500">点击查看二维码 / ID</p>
+                </div>
+
+                <!-- QQ -->
+                <div onclick="handleQQClick()" class="glass-panel p-8 rounded-2xl text-center hover:bg-blue-50/80 transition-all cursor-pointer group border-t-4 border-blue-500 shadow-sm hover:shadow-lg hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-500 transition-colors">
+                        <i class="fa-brands fa-qq text-2xl text-blue-600 group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-800">QQ 交谈</h3>
+                    <p class="text-sm text-slate-500">点击一键复制或跳转</p>
+                </div>
+
+                <!-- 邮箱 -->
+                <a href="mailto:example@email.com" class="glass-panel p-8 rounded-2xl text-center hover:bg-yellow-50/80 transition-all cursor-pointer group border-t-4 border-yellow-500 block shadow-sm hover:shadow-lg hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-yellow-500 transition-colors">
+                        <i class="fa-regular fa-envelope text-2xl text-yellow-600 group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-800">发送邮件</h3>
+                    <p class="text-sm text-slate-500">欢迎商业合作与交流</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 留言板功能区 -->
+    <section id="guestbook" class="py-20 px-4 sm:px-6 lg:px-8 mb-20">
+        <div class="max-w-3xl mx-auto glass-panel rounded-3xl p-8 md:p-12 shadow-2xl border border-white">
+            <h2 class="text-3xl font-bold text-center mb-8 flex items-center justify-center gap-2 text-slate-800">
+                <i class="fa-solid fa-pen-nib text-purple-600"></i> 访客留言
+            </h2>
+
+            <!-- 留言表单 -->
+            <form id="messageForm" class="space-y-6 mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-2">你的名字 / 昵称</label>
+                        <input type="text" id="visitorName" required class="w-full bg-white/60 border border-slate-300 rounded-lg px-4 py-3 text-slate-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all placeholder-slate-400" placeholder="神秘访客">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-2">联系方式 (选填)</label>
+                        <input type="text" id="visitorContact" class="w-full bg-white/60 border border-slate-300 rounded-lg px-4 py-3 text-slate-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all placeholder-slate-400" placeholder="微信 / QQ / 邮箱">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-600 mb-2">想对我说的话</label>
+                    <textarea id="visitorMsg" required rows="3" class="w-full bg-white/60 border border-slate-300 rounded-lg px-4 py-3 text-slate-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all placeholder-slate-400" placeholder="留下一句暖心的话吧..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] shadow-lg">
+                    发布留言 <i class="fa-solid fa-paper-plane ml-2"></i>
+                </button>
+            </form>
+
+            <!-- 留言列表展示区 -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4">最新留言</h3>
+                <div id="messageList" class="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    <!-- 默认的一条留言 -->
+                    <div class="bg-white p-5 rounded-xl border-l-4 border-purple-500 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="font-bold text-slate-800">站长 Seacoral</span>
+                            <span class="text-xs text-slate-400">刚刚</span>
+                        </div>
+                        <p class="text-slate-600 text-sm">欢迎来到我的主页！在这里留下你的足迹吧~ 所有的留言都会被保存在你的浏览器本地。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部 Footer -->
+    <footer class="glass-panel mt-auto py-8 text-center border-t border-white/40">
+        <p class="text-slate-500 text-sm">© 2023 Seacoral's Creative Space. All Rights Reserved.</p>
+        <div class="mt-4 flex justify-center space-x-6">
+            <a href="#" class="text-slate-400 hover:text-slate-800 transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+            <a href="#" class="text-slate-400 hover:text-slate-800 transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+            <a href="#" class="text-slate-400 hover:text-slate-800 transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+        </div>
+    </footer>
+
+    <!-- 悬浮小组件：音乐播放器 UI -->
+    <div class="fixed bottom-6 right-6 glass-panel p-3 rounded-full flex items-center gap-3 shadow-2xl z-40 animate-pulse-slow cursor-pointer hover:bg-white transition-colors border border-slate-200" title="播放音乐 (Demo)">
+        <div class="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center animate-spin" style="animation-duration: 3s;">
+            <i class="fa-solid fa-music text-xs text-white"></i>
+        </div>
+        <div class="hidden md:block pr-2">
+            <p class="text-xs font-bold text-slate-800">Chill Lo-Fi</p>
+            <p class="text-[10px] text-slate-500">正在播放...</p>
+        </div>
     </div>
 
-    <div class="container">
-        <header class="header-card">
-            <h1>🌊 seacoral</h1>
-            <p>
-                欢迎来到我的数字礁群。
-                我是一名对代码充满热情的开发者，专注于构建**健壮、美丽且互联的数字结构**。
-                探索我的项目，了解我如何将创意转化为现实。
-            </p>
-            <div class="social-links">
-                <a href="https://github.com/YourUsername" target="_blank" title="我的 GitHub"><i class="fab fa-github"></i></a>
-                <a href="mailto:youremail@example.com" title="给我发送邮件"><i class="fas fa-envelope"></i></a>
-                <a href="#" id="theme-toggle" title="切换主题"><i class="fas fa-sun"></i></a> 
+    <!-- 微信二维码弹窗 (Modal) - 浅色优化 -->
+    <div id="wechatModal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-slate-900/50 transition-opacity backdrop-blur-sm" onclick="toggleWechatModal()"></div>
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-2xl glass-panel bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-sm border border-slate-200">
+                <div class="p-6 text-center">
+                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 mb-4">
+                        <i class="fa-brands fa-weixin text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold leading-6 text-slate-800 mb-2" id="modal-title">扫一扫加好友</h3>
+                    <!-- 二维码占位图 -->
+                    <div class="bg-slate-100 p-2 rounded-lg inline-block mb-4 border border-slate-200">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=HelloWorld" alt="WeChat QR" class="w-40 h-40 mix-blend-multiply">
+                    </div>
+                    <p class="text-sm text-slate-500">微信号: <span class="font-mono text-green-600 font-bold select-all">MyWechatID_888</span></p>
+                    <p class="text-xs text-slate-400 mt-1">(点击微信号可复制)</p>
+                </div>
+                <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 bg-slate-50">
+                    <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 sm:mt-0 sm:w-auto" onclick="toggleWechatModal()">关闭</button>
+                </div>
             </div>
-        </header>
+        </div>
+    </div>
 
-        <section class="projects-section">
-            <h2>✨ 精选项目</h2>
-            <div class="projects-grid">
-                
-                <div class="project-card">
-                    <h3>项目名称 A (WebApp)</h3>
-                    <p>这是一个基于 React 和 Node.js 的全栈 Web 应用，用于高效管理个人待办事项，具有实时同步功能。</p>
-                    <a href="https://github.com/YourUsername/Project-A" target="_blank">查看代码 (GitHub)</a>
-                </div>
-
-                <div class="project-card">
-                    <h3>项目名称 B (Python Tool)</h3>
-                    <p>一个轻量级的 Python 脚本库，旨在简化数据清洗和格式化任务，提高数据处理的自动化水平。</p>
-                    <a href="https://github.com/YourUsername/Project-B" target="_blank">查看代码 (GitHub)</a>
-                </div>
-
-                <div class="project-card">
-                    <h3>项目名称 C (Frontend)</h3>
-                    <p>使用纯 HTML/CSS 实现的响应式设计模板，专注于无障碍和高性能加载体验。</p>
-                    <a href="https://github.com/YourUsername/Project-C" target="_blank">查看代码 (GitHub)</a>
-                </div>
-
-            </div>
-        </section>
+    <!-- 提示框 (Toast) - 浅色优化 -->
+    <div id="toast" class="fixed top-20 right-5 transform translate-x-full transition-transform duration-300 z-50 bg-white border-l-4 border-green-500 px-6 py-4 rounded shadow-xl flex items-center">
+        <i class="fa-solid fa-check-circle text-green-500 mr-3"></i>
+        <span id="toastMsg" class="text-slate-700 font-medium">操作成功</span>
     </div>
 
     <script>
-        // 主题切换功能（深色/浅色模式）
-        document.getElementById('theme-toggle').addEventListener('click', function(e) {
-            e.preventDefault();
-            const root = document.documentElement; // <html> 元素
-            const icon = this.querySelector('i');
+        // --- 1. 打字机特效 ---
+        const texts = ["你好", "欢迎来到我的世界", "路虽远，行则将至", "Just listen to the wind and wait for the flowers to bloom."];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
 
-            // 检查当前是否为“浅色模式”的标志
-            const isLight = root.classList.toggle('light-theme');
-
-            if (isLight) {
-                // 切换到浅色模式样式
-                root.style.setProperty('--main-bg', '#fff');
-                root.style.setProperty('--secondary-bg', '#eee');
-                root.style.setProperty('--card-bg', 'rgba(255, 255, 255, 0.7)');
-                root.style.setProperty('--text-color', '#1f1c2c');
-                root.style.setProperty('--accent-color', '#007bff');
-                root.style.setProperty('--hover-color', '#0056b3');
-                icon.className = 'fas fa-moon'; // 切换图标为月亮
-            } else {
-                // 切换回默认（深色）模式样式
-                root.style.setProperty('--main-bg', '#1f1c2c');
-                root.style.setProperty('--secondary-bg', '#928dab');
-                root.style.setProperty('--card-bg', 'rgba(0, 0, 0, 0.4)');
-                root.style.setProperty('--text-color', '#fff');
-                root.style.setProperty('--accent-color', '#00ffff');
-                root.style.setProperty('--hover-color', '#00cccc');
-                icon.className = 'fas fa-sun'; // 切换图标为太阳
+        (function type() {
+            if (count === texts.length) {
+                count = 0;
             }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+
+            document.getElementById("typing-text").textContent = letter;
+
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000); // 停顿 2 秒
+            } else {
+                setTimeout(type, 150); // 打字速度
+            }
+        })();
+
+        // --- 2. 微信模态框控制 ---
+        function toggleWechatModal() {
+            const modal = document.getElementById('wechatModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // --- 3. QQ 点击处理 (复制 ID) ---
+        function handleQQClick() {
+            const qqId = "3206139323"; // 这里替换成你的QQ
+            navigator.clipboard.writeText(qqId).then(() => {
+                showToast(`QQ号 ${qqId} 已复制到剪贴板！`);
+                // 也可以尝试唤起QQ: window.location.href = `tencent://message/?uin=${qqId}`;
+            });
+        }
+
+        // --- 4. Toast 提示框 ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.textContent = message;
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        // --- 5. 留言板功能 (LocalStorage) ---
+        const messageForm = document.getElementById('messageForm');
+        const messageList = document.getElementById('messageList');
+
+        // 加载留言
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('mySiteMessages') || '[]');
+            
+            messages.forEach(msg => {
+                addMessageToDOM(msg.name, msg.content, msg.date);
+            });
+        }
+
+        function addMessageToDOM(name, content, date) {
+            const div = document.createElement('div');
+            // 浅色主题下的留言样式
+            div.className = "bg-white p-5 rounded-xl border-l-4 border-pink-500 shadow-sm animate-[fadeIn_0.5s_ease-out]";
+            div.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <span class="font-bold text-slate-800">${escapeHtml(name)}</span>
+                    <span class="text-xs text-slate-400">${date}</span>
+                </div>
+                <p class="text-slate-600 text-sm">${escapeHtml(content)}</p>
+            `;
+            // 插入到列表最前面
+            messageList.insertBefore(div, messageList.firstChild);
+        }
+
+        // 防 XSS 简单处理
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        messageForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('visitorName').value;
+            const contact = document.getElementById('visitorContact').value;
+            const msg = document.getElementById('visitorMsg').value;
+            const date = new Date().toLocaleString();
+
+            const newMessage = { name, contact, content: msg, date };
+
+            // 保存到 LocalStorage
+            const messages = JSON.parse(localStorage.getItem('mySiteMessages') || '[]');
+            messages.push(newMessage);
+            localStorage.setItem('mySiteMessages', JSON.stringify(messages));
+
+            // 更新 UI
+            addMessageToDOM(name, msg, "刚刚");
+            
+            // 重置表单并提示
+            messageForm.reset();
+            showToast("留言发布成功！");
         });
+
+        // 初始化加载
+        loadMessages();
+
+        // 平滑滚动修正 (处理 fixed header 遮挡)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            });
+        });
+
     </script>
 </body>
 </html>
