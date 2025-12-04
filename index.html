@@ -99,8 +99,8 @@
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#home" class="text-slate-600 hover:text-purple-600 transition-colors px-3 py-2 rounded-md text-sm font-medium">首页</a>
                         <a href="#photos" class="text-slate-600 hover:text-purple-600 transition-colors px-3 py-2 rounded-md text-sm font-medium">相册</a>
-                        <a href="#contact" class="text-slate-600 hover:text-purple-600 transition-colors px-3 py-2 rounded-md text-sm font-medium">联系我</a>
-                        <a href="#guestbook" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-all shadow-lg hover:shadow-purple-500/30">留言板</a>
+                        <a href="#contact" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-all shadow-lg hover:shadow-purple-500/30">联系我</a>
+                        <!-- 留言板链接已移除 -->
                     </div>
                 </div>
                 <!-- 移动端菜单按钮 (简化版) -->
@@ -122,8 +122,9 @@
             <div class="flex-shrink-0 relative group">
                 <div class="absolute -inset-2 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full blur opacity-60 group-hover:opacity-100 transition duration-500"></div>
                 <img class="relative w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-white object-cover shadow-2xl transform transition duration-500 group-hover:scale-105" 
-                     src="face.jpg" 
-                     alt="Avatar">
+                    src="face.jpg" 
+                    alt="Avatar"
+                    onerror="this.onerror=null; this.src='https://placehold.co/256x256/8B5CF6/ffffff?text=Avatar';">
                 <div class="absolute bottom-4 right-4 w-8 h-8 bg-green-500 border-4 border-white rounded-full flex items-center justify-center shadow-md" title="Online">
                     <i class="fa-solid fa-check text-white text-xs"></i>
                 </div>
@@ -135,7 +136,7 @@
                     Welcome to my world
                 </div>
                 <h1 class="text-5xl md:text-7xl font-extrabold text-slate-800 mb-4 tracking-tight">
-                     I am<br>
+                    I am<br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600" id="name-placeholder">Seacoral</span>
                 </h1>
                 <p class="mt-2 text-2xl text-slate-600 h-10 typing-cursor font-light">
@@ -150,7 +151,7 @@
                         <i class="fa-regular fa-paper-plane"></i> 联系我
                     </a>
                     <a href="#photos" class="glass-panel text-slate-700 px-8 py-3 rounded-full border border-slate-200 hover:bg-white transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-camera text-purple-500"></i> 看照片
+                        <i class="fa-solid fa-camera text-purple-500"></i> 照片
                     </a>
                 </div>
             </div>
@@ -161,34 +162,43 @@
     <section id="photos" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold text-center mb-12 flex items-center justify-center gap-3 text-slate-800">
-                <i class="fa-solid fa-images text-purple-600"></i> 我的摄影与生活
+                <i class="fa-solid fa-images text-purple-600"></i> my life
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- 照片卡片样式更新 -->
                 <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 shadow-md hover:shadow-xl transition-all">
-                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Photo 1">
+                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                         alt="Photo 1"
+                         onerror="this.onerror=null; this.src='https://placehold.co/1000x1000/F472B6/ffffff?text=Travel';">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                         <h3 class="text-xl font-bold text-white">远行</h3>
                         <p class="text-sm text-gray-200">探索世界的尽头</p>
                     </div>
                 </div>
                 <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 shadow-md hover:shadow-xl transition-all">
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Photo 2">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                         alt="Photo 2"
+                         onerror="this.onerror=null; this.src='https://placehold.co/1000x1000/F472B6/ffffff?text=Tech';">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                         <h3 class="text-xl font-bold text-white">科技</h3>
                         <p class="text-sm text-gray-200">未来的无限可能</p>
                     </div>
                 </div>
                 <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 shadow-md hover:shadow-xl transition-all">
-                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Photo 3">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                         alt="Photo 3"
+                         onerror="this.onerror=null; this.src='https://placehold.co/1000x1000/F472B6/ffffff?text=Code';">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                         <h3 class="text-xl font-bold text-white">代码</h3>
                         <p class="text-sm text-gray-200">构建数字世界</p>
                     </div>
                 </div>
-                 <!-- 更多照片占位 -->
-                 <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 flex items-center justify-center bg-white/40 border-dashed border-2 border-slate-300 hover:border-purple-400 transition-colors">
+                <!-- 更多照片占位 -->
+                <div class="glass-panel rounded-2xl overflow-hidden group cursor-pointer relative h-72 flex items-center justify-center bg-white/40 border-dashed border-2 border-slate-300 hover:border-purple-400 transition-colors">
                     <div class="text-center group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-plus text-4xl text-slate-400 mb-2"></i>
                         <p class="text-slate-500">更多照片加载中...</p>
@@ -199,9 +209,9 @@
     </section>
 
     <!-- 联系与社交功能区 -->
-    <section id="contact" class="py-20 relative">
+    <section id="contact" class="py-20 relative mb-20">
         <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-slate-800">保持联系</h2>
+            <h2 class="text-3xl font-bold text-center mb-12 text-slate-800">我的联系方式</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- 微信 -->
@@ -234,50 +244,7 @@
         </div>
     </section>
 
-    <!-- 留言板功能区 -->
-    <section id="guestbook" class="py-20 px-4 sm:px-6 lg:px-8 mb-20">
-        <div class="max-w-3xl mx-auto glass-panel rounded-3xl p-8 md:p-12 shadow-2xl border border-white">
-            <h2 class="text-3xl font-bold text-center mb-8 flex items-center justify-center gap-2 text-slate-800">
-                <i class="fa-solid fa-pen-nib text-purple-600"></i> 访客留言
-            </h2>
-
-            <!-- 留言表单 -->
-            <form id="messageForm" class="space-y-6 mb-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-2">你的名字 / 昵称</label>
-                        <input type="text" id="visitorName" required class="w-full bg-white/60 border border-slate-300 rounded-lg px-4 py-3 text-slate-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all placeholder-slate-400" placeholder="神秘访客">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-2">联系方式 (选填)</label>
-                        <input type="text" id="visitorContact" class="w-full bg-white/60 border border-slate-300 rounded-lg px-4 py-3 text-slate-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all placeholder-slate-400" placeholder="微信 / QQ / 邮箱">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-600 mb-2">想对我说的话</label>
-                    <textarea id="visitorMsg" required rows="3" class="w-full bg-white/60 border border-slate-300 rounded-lg px-4 py-3 text-slate-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all placeholder-slate-400" placeholder="留下一句暖心的话吧..."></textarea>
-                </div>
-                <button type="submit" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] shadow-lg">
-                    发布留言 <i class="fa-solid fa-paper-plane ml-2"></i>
-                </button>
-            </form>
-
-            <!-- 留言列表展示区 -->
-            <div class="space-y-4">
-                <h3 class="text-lg font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4">最新留言</h3>
-                <div id="messageList" class="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                    <!-- 默认的一条留言 -->
-                    <div class="bg-white p-5 rounded-xl border-l-4 border-purple-500 shadow-sm">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="font-bold text-slate-800">站长 Seacoral</span>
-                            <span class="text-xs text-slate-400">刚刚</span>
-                        </div>
-                        <p class="text-slate-600 text-sm">欢迎来到我的主页！在这里留下你的足迹吧~ 所有的留言都会被保存在你的浏览器本地。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- 留言板功能区已移除 -->
 
     <!-- 底部 Footer -->
     <footer class="glass-panel mt-auto py-8 text-center border-t border-white/40">
@@ -312,7 +279,11 @@
                     <h3 class="text-lg font-semibold leading-6 text-slate-800 mb-2" id="modal-title">扫一扫加好友</h3>
                     <!-- 二维码占位图 -->
                     <div class="bg-slate-100 p-2 rounded-lg inline-block mb-4 border border-slate-200">
-                        <img src="wxQR.jpg" alt="WeChat QR" class="w-40 h-40 mix-blend-multiply">
+                        <!-- 注意：使用 placeholder 链接作为图片资源的 Fallback，原图链接保留 -->
+                        <img src="wxQR.jpg" 
+                             alt="WeChat QR" 
+                             class="w-40 h-40"
+                             onerror="this.onerror=null; this.src='https://placehold.co/160x160/10B981/ffffff?text=WeChat+QR';">
                     </div>
                     <p class="text-sm text-slate-500">微信号: <span class="font-mono text-green-600 font-bold select-all">Z27839</span></p>
                     <p class="text-xs text-slate-400 mt-1">(点击微信号可复制)</p>
@@ -369,10 +340,15 @@
         // --- 3. QQ 点击处理 (复制 ID) ---
         function handleQQClick() {
             const qqId = "3206139323"; // 这里替换成你的QQ
-            navigator.clipboard.writeText(qqId).then(() => {
-                showToast(`QQ号 ${qqId} 已复制到剪贴板！`);
-                // 也可以尝试唤起QQ: window.location.href = `tencent://message/?uin=${qqId}`;
-            });
+            // 使用 document.execCommand('copy') 作为 iframe 内复制文本的兼容方法
+            const tempInput = document.createElement('textarea');
+            tempInput.value = qqId;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            showToast(`QQ号 ${qqId} 已复制到剪贴板！`);
         }
 
         // --- 4. Toast 提示框 ---
@@ -387,76 +363,16 @@
             }, 3000);
         }
 
-        // --- 5. 留言板功能 (LocalStorage) ---
-        const messageForm = document.getElementById('messageForm');
-        const messageList = document.getElementById('messageList');
-
-        // 加载留言
-        function loadMessages() {
-            const messages = JSON.parse(localStorage.getItem('mySiteMessages') || '[]');
-            
-            messages.forEach(msg => {
-                addMessageToDOM(msg.name, msg.content, msg.date);
-            });
-        }
-
-        function addMessageToDOM(name, content, date) {
-            const div = document.createElement('div');
-            // 浅色主题下的留言样式
-            div.className = "bg-white p-5 rounded-xl border-l-4 border-pink-500 shadow-sm animate-[fadeIn_0.5s_ease-out]";
-            div.innerHTML = `
-                <div class="flex justify-between items-start mb-2">
-                    <span class="font-bold text-slate-800">${escapeHtml(name)}</span>
-                    <span class="text-xs text-slate-400">${date}</span>
-                </div>
-                <p class="text-slate-600 text-sm">${escapeHtml(content)}</p>
-            `;
-            // 插入到列表最前面
-            messageList.insertBefore(div, messageList.firstChild);
-        }
-
-        // 防 XSS 简单处理
-        function escapeHtml(text) {
-            return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        messageForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('visitorName').value;
-            const contact = document.getElementById('visitorContact').value;
-            const msg = document.getElementById('visitorMsg').value;
-            const date = new Date().toLocaleString();
-
-            const newMessage = { name, contact, content: msg, date };
-
-            // 保存到 LocalStorage
-            const messages = JSON.parse(localStorage.getItem('mySiteMessages') || '[]');
-            messages.push(newMessage);
-            localStorage.setItem('mySiteMessages', JSON.stringify(messages));
-
-            // 更新 UI
-            addMessageToDOM(name, msg, "刚刚");
-            
-            // 重置表单并提示
-            messageForm.reset();
-            showToast("留言发布成功！");
-        });
-
-        // 初始化加载
-        loadMessages();
-
-        // 平滑滚动修正 (处理 fixed header 遮挡)
+        // --- 5. 平滑滚动修正 (处理 fixed header 遮挡) ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
+                
+                // 确保目标元素存在
+                if (!targetElement) return;
+
                 const headerOffset = 80;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
