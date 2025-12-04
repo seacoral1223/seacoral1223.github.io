@@ -1,112 +1,257 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>seacoral · Home</title>
-  <style>
-    /* 基本重置 */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-      color: #fff;
-      overflow: hidden;
-    }
-    /* 动态背景球体 */
-    .background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0; left: 0;
-      overflow: hidden;
-      z-index: -1;
-    }
-    .background span {
-      position: absolute;
-      display: block;
-      width: 20px;
-      height: 20px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      animation: float 10s linear infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-      50% { opacity: 0.5; }
-      100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
-    }
-    /* 页面主体卡片 */
-    .card {
-      text-align: center;
-      background: rgba(0,0,0,0.3);
-      padding: 50px 60px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-      max-width: 450px;
-    }
-    h1 {
-      font-size: 2.8rem;
-      margin-bottom: 15px;
-    }
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 25px;
-      opacity: 0.9;
-    }
-    .links a {
-      display: inline-block;
-      margin: 0 10px;
-      padding: 12px 20px;
-      background: #fff;
-      color: #111;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 15px;
-      transition: 0.3s;
-    }
-    .links a:hover {
-      transform: translateY(-5px);
-      background: #00ffff;
-      color: #000;
-    }
-    /* 响应式 */
-    @media (max-width: 500px) {
-      .card { padding: 30px 20px; }
-      h1 { font-size: 2rem; }
-      p { font-size: 1rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>seacoral | 数字礁群的构建者</title>
+    <style>
+        /* 导入图标字体：用于GitHub/邮件等小图标 */
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+        /* CSS 变量定义 - 方便未来更换主题 */
+        :root {
+            --main-bg: #1f1c2c;
+            --secondary-bg: #928dab;
+            --card-bg: rgba(0, 0, 0, 0.4);
+            --text-color: #fff;
+            --accent-color: #00ffff; /* 亮青色，模仿海洋光芒 */
+            --hover-color: #00cccc;
+        }
+
+        /* 基本重置 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            min-height: 100vh; /* 保证至少占满整个视口 */
+            display: flex;
+            flex-direction: column; /* 允许内容垂直排列 */
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--main-bg), var(--secondary-bg));
+            color: var(--text-color);
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+        
+        /* 动态背景球体 - 继承原有样式 */
+        .background {
+            position: fixed; /* 固定在背景 */
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .background span {
+            position: absolute;
+            display: block;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+        }
+
+        /* 页面主要容器 */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        /* 头部介绍卡片 */
+        .header-card {
+            text-align: center;
+            background: var(--card-bg);
+            padding: 50px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .header-card h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        .header-card p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        /* 社交链接样式 */
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        /* 项目展示区 */
+        .projects-section {
+            padding: 20px 0;
+        }
+        .projects-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* 单个项目卡片 */
+        .project-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, border-color 0.3s;
+            border-left: 5px solid var(--accent-color);
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-left: 5px solid var(--hover-color);
+        }
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        .project-card p {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            opacity: 0.85;
+        }
+        .project-card a {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 8px 15px;
+            border: 1px solid var(--text-color);
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s;
+            font-size: 0.9rem;
+        }
+        .project-card a:hover {
+            background: var(--accent-color);
+            color: var(--main-bg);
+            border-color: var(--accent-color);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .header-card h1 { font-size: 2.5rem; }
+            .header-card p { font-size: 1rem; }
+            .project-card { border-left-width: 3px; }
+            .projects-section h2 { font-size: 1.8rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="background">
-    <!-- 随机生成 30 个漂浮小球 -->
-    <script>
-      const bg = document.querySelector('.background');
-      for (let i = 0; i < 30; i++) {
-        const span = document.createElement('span');
-        span.style.left = Math.random() * 100 + 'vw';
-        span.style.width = span.style.height = Math.random() * 15 + 10 + 'px';
-        span.style.animationDuration = (5 + Math.random() * 10) + 's';
-        span.style.animationDelay = Math.random() * 10 + 's';
-        bg.appendChild(span);
-      }
-    </script>
-  </div>
-
-  <div class="card">
-    <h1>seacoral</h1>
-    <p>欢迎来到我的世界，一个小小的创意天地。更多内容即将上线。</p>
-    <div class="links">
-      <a href="#">hello</a>
-      <a href="#">你好</a>
-      <a href="#">现在这里什么都没有</a>
+    
+    <div class="background">
+        <script>
+            // 脚本用于动态生成背景气泡
+            const bg = document.querySelector('.background');
+            for (let i = 0; i < 30; i++) {
+                const span = document.createElement('span');
+                // 随机设置气泡的位置、大小、动画速度和延迟
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.width = span.style.height = Math.random() * 15 + 10 + 'px';
+                span.style.animationDuration = (8 + Math.random() * 12) + 's';
+                span.style.animationDelay = Math.random() * 10 + 's';
+                bg.appendChild(span);
+            }
+        </script>
     </div>
-  </div>
+
+    <div class="container">
+        <header class="header-card">
+            <h1>🌊 seacoral</h1>
+            <p>
+                欢迎来到我的数字礁群。
+                我是一名对代码充满热情的开发者，专注于构建**健壮、美丽且互联的数字结构**。
+                探索我的项目，了解我如何将创意转化为现实。
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/YourUsername" target="_blank" title="我的 GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:youremail@example.com" title="给我发送邮件"><i class="fas fa-envelope"></i></a>
+                <a href="#" id="theme-toggle" title="切换主题"><i class="fas fa-sun"></i></a> 
+            </div>
+        </header>
+
+        <section class="projects-section">
+            <h2>✨ 精选项目</h2>
+            <div class="projects-grid">
+                
+                <div class="project-card">
+                    <h3>项目名称 A (WebApp)</h3>
+                    <p>这是一个基于 React 和 Node.js 的全栈 Web 应用，用于高效管理个人待办事项，具有实时同步功能。</p>
+                    <a href="https://github.com/YourUsername/Project-A" target="_blank">查看代码 (GitHub)</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>项目名称 B (Python Tool)</h3>
+                    <p>一个轻量级的 Python 脚本库，旨在简化数据清洗和格式化任务，提高数据处理的自动化水平。</p>
+                    <a href="https://github.com/YourUsername/Project-B" target="_blank">查看代码 (GitHub)</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>项目名称 C (Frontend)</h3>
+                    <p>使用纯 HTML/CSS 实现的响应式设计模板，专注于无障碍和高性能加载体验。</p>
+                    <a href="https://github.com/YourUsername/Project-C" target="_blank">查看代码 (GitHub)</a>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 主题切换功能（深色/浅色模式）
+        document.getElementById('theme-toggle').addEventListener('click', function(e) {
+            e.preventDefault();
+            const root = document.documentElement; // <html> 元素
+            const icon = this.querySelector('i');
+
+            // 检查当前是否为“浅色模式”的标志
+            const isLight = root.classList.toggle('light-theme');
+
+            if (isLight) {
+                // 切换到浅色模式样式
+                root.style.setProperty('--main-bg', '#fff');
+                root.style.setProperty('--secondary-bg', '#eee');
+                root.style.setProperty('--card-bg', 'rgba(255, 255, 255, 0.7)');
+                root.style.setProperty('--text-color', '#1f1c2c');
+                root.style.setProperty('--accent-color', '#007bff');
+                root.style.setProperty('--hover-color', '#0056b3');
+                icon.className = 'fas fa-moon'; // 切换图标为月亮
+            } else {
+                // 切换回默认（深色）模式样式
+                root.style.setProperty('--main-bg', '#1f1c2c');
+                root.style.setProperty('--secondary-bg', '#928dab');
+                root.style.setProperty('--card-bg', 'rgba(0, 0, 0, 0.4)');
+                root.style.setProperty('--text-color', '#fff');
+                root.style.setProperty('--accent-color', '#00ffff');
+                root.style.setProperty('--hover-color', '#00cccc');
+                icon.className = 'fas fa-sun'; // 切换图标为太阳
+            }
+        });
+    </script>
 </body>
 </html>
